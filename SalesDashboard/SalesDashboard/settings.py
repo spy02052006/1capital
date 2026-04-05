@@ -181,15 +181,16 @@ LOGOUT_URL = 'logout'
 # Trust the X-Forwarded-Proto header from Nginx proxy (for HTTPS detection)
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-SECURE_SSL_REDIRECT = not DEBUG  # Enable in production
-SESSION_COOKIE_SECURE = not DEBUG  # Enable in production
-CSRF_COOKIE_SECURE = not DEBUG  # Enable in production
+# Nginx handles HTTP to HTTPS redirect, so disable Django's redirect to avoid 500 errors
+SECURE_SSL_REDIRECT = False
+SESSION_COOKIE_SECURE = False  # Nginx handles SSL
+CSRF_COOKIE_SECURE = False  # Nginx handles SSL
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
-SECURE_HSTS_SECONDS = 31536000 if not DEBUG else 0  # 1 year in production
-SECURE_HSTS_INCLUDE_SUBDOMAINS = not DEBUG  # Enable in production
-SECURE_HSTS_PRELOAD = not DEBUG  # Enable in production
+SECURE_HSTS_SECONDS = 0  # Disable HSTS - let Nginx handle security headers
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+SECURE_HSTS_PRELOAD = False
 
 # Logging Configuration
 LOGGING = {
