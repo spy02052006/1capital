@@ -264,7 +264,7 @@ for emp in Employee.objects.filter(is_active=True).order_by('rm_name'):
     profile.wire_code = emp.wire_code
     
     # Assign role
-    if emp.manager is None:
+    if emp.manager_id is None:
         profile.role = 'L'
     elif emp.subordinates.exists():
         profile.role = 'M'
