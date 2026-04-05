@@ -1,0 +1,481 @@
+# PostgreSQL Database Schema Configuration
+# Define column mappings, data types, and validation rules for each data table
+# Auto-loaded by the data loading service
+
+tables:
+  # ============================================================================
+  # BROKERAGE_FACT - Equity Brokerage Transaction Data
+  # ============================================================================
+  brokerage_fact:
+    table_name: "BrokerageFact"
+    model_module: "database.models.brokerage"
+    source_folder: "data_files/brokerage_fact"
+    description: "Brokerage transactions: equity cash, futures, options, currency, commodities"
+    
+    columns:
+      - name: "Client Code"
+        db_field: "client_code"
+        data_type: "string"
+        max_length: 50
+        nullable: true
+        validation: "must not be empty"
+      
+      - name: "WireCode"
+        db_field: "wire_code"
+        data_type: "string"
+        max_length: 50
+        nullable: true
+      
+      - name: "Date"
+        db_field: "transaction_date"
+        data_type: "date"
+        nullable: true
+      
+      - name: "Cash Delivery"
+        db_field: "cash_delivery"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+        default: 0
+      
+      - name: "Cash Intraday"
+        db_field: "cash_intraday"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+        default: 0
+      
+      - name: "Cash"
+        db_field: "cash_total"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+      
+      - name: "Futures"
+        db_field: "futures"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+        default: 0
+      
+      - name: "Options"
+        db_field: "options"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+        default: 0
+      
+      - name: "Currency"
+        db_field: "currency"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+        default: 0
+      
+      - name: "Commodity"
+        db_field: "commodity"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+        default: 0
+      
+      - name: "Equity Cash Intraday Turnover"
+        db_field: "equity_cash_intraday_turnover"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+        default: 0
+      
+      - name: "Equity Cash Delivery Turnover"
+        db_field: "equity_cash_delivery_turnover"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+      
+      - name: "Total Equity Cash Turnover"
+        db_field: "total_equity_cash_turnover"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+      
+      - name: "Equity Futures Turnover"
+        db_field: "equity_futures_turnover"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+        default: 0
+      
+      - name: "Equity Options Turnover"
+        db_field: "equity_options_turnover"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+        default: 0
+      
+      - name: "Total Equity FnO Turnover"
+        db_field: "total_equity_fno_turnover"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+        default: 0
+      
+      - name: "Total Equity Turnover"
+        db_field: "total_equity_turnover"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+      
+      - name: "Currency Turnover"
+        db_field: "currency_turnover"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+        default: 0
+      
+      - name: "Commodity Turnover"
+        db_field: "commodity_turnover"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+        default: 0
+      
+      - name: "Total Turnover"
+        db_field: "total_turnover"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+      
+      - name: "Equity Vas"
+        db_field: "equity_vas"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+        default: 0
+      
+      - name: "Commodity Vas"
+        db_field: "commodity_vas"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+        default: 0
+      
+      - name: "Total VAS Subscription"
+        db_field: "total_vas_subscription"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+        default: 0
+      
+      - name: "Equity Vas Reversal"
+        db_field: "equity_vas_reversal"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+        default: 0
+      
+      - name: "Commodity Vas Reversal"
+        db_field: "commodity_vas_reversal"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+        default: 0
+      
+      - name: "Total VAS Reversal"
+        db_field: "total_vas_reversal"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+        default: 0
+      
+      - name: "Total Brokerage"
+        db_field: "total_brokerage"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+
+  # ============================================================================
+  # CLIENT_DIM - Client Master Dimension
+  # ============================================================================
+  client_dim:
+    table_name: "ClientDim"
+    model_module: "database.models.client"
+    source_folder: "data_files/Client_dim"
+    description: "Client master data: demographics, onboarding, AUM, relationship manager"
+    
+    columns:
+      - name: "Client ID/PAN"
+        db_field: "client_id_pan"
+        data_type: "string"
+        max_length: 50
+        nullable: true
+        validation: "must not be empty"
+      
+      - name: "Client Name"
+        db_field: "client_name"
+        data_type: "string"
+        max_length: 255
+        nullable: true
+      
+      - name: "Group Code"
+        db_field: "group_code"
+        data_type: "string"
+        max_length: 50
+        nullable: true
+      
+      - name: "Onboarded on"
+        db_field: "onboarded_date"
+        data_type: "date"
+        nullable: true
+      
+      - name: "AUM (₹)"
+        db_field: "aum"
+        data_type: "string"
+        max_length: 50
+        nullable: true
+        note: "Store as string - contains formatted text like '3.29 Cr'"
+      
+      - name: "RM"
+        db_field: "relationship_manager"
+        data_type: "string"
+        max_length: 255
+        nullable: true
+      
+      - name: "RM Pan"
+        db_field: "rm_pan"
+        data_type: "string"
+        max_length: 50
+        nullable: true
+
+  # ============================================================================
+  # EMPLOYEE_DIM - Employee Master Dimension
+  # ============================================================================
+  employee_dim:
+    table_name: "EmployeeDim"
+    model_module: "database.models.employee"
+    source_folder: "data_files/Employee_dim"
+    description: "Employee/RM master data: ID, name, PAN, wire code, manager hierarchy"
+    
+    columns:
+      - name: "ID"
+        db_field: "employee_id"
+        data_type: "integer"
+        nullable: true
+      
+      - name: "NAME"
+        db_field: "name"
+        data_type: "string"
+        max_length: 255
+        nullable: true
+      
+      - name: "PAN"
+        db_field: "pan"
+        data_type: "string"
+        max_length: 50
+        nullable: true
+      
+      - name: "MANAGER ID"
+        db_field: "manager_id"
+        data_type: "integer"
+        nullable: true
+      
+      - name: "wire code"
+        db_field: "wire_code"
+        data_type: "string"
+        max_length: 50
+        nullable: true
+      
+      - name: "employee id"
+        db_field: "employee_code"
+        data_type: "string"
+        max_length: 50
+        nullable: true
+
+  # ============================================================================
+  # MF_FACT - Mutual Fund Transaction Data
+  # ============================================================================
+  mf_fact:
+    table_name: "MFact"
+    model_module: "database.models.mf"
+    source_folder: "data_files/MF_fact"
+    description: "Mutual fund transactions: subscription, redemption, fees, trail charges"
+    
+    columns:
+      - name: "FOLIOCHK"
+        db_field: "folio_check"
+        data_type: "string"
+        max_length: 50
+        nullable: true
+      
+      - name: "INV_NAME"
+        db_field: "investor_name"
+        data_type: "string"
+        max_length: 255
+        nullable: true
+      
+      - name: "PAN_NO"
+        db_field: "pan_no"
+        data_type: "string"
+        max_length: 50
+        nullable: true
+      
+      - name: "EUIN"
+        db_field: "euin"
+        data_type: "string"
+        max_length: 50
+        nullable: true
+      
+      - name: "TRXN_DB_CR"
+        db_field: "transaction_type"
+        data_type: "string"
+        max_length: 10
+        nullable: true
+        note: "P=Purchase, R=Redemption, etc."
+      
+      - name: "UNITS"
+        db_field: "units"
+        data_type: "decimal"
+        decimal_places: 4
+        nullable: true
+      
+      - name: "AMOUNT"
+        db_field: "amount"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+      
+      - name: "FEE_FRDT"
+        db_field: "fee_from_date"
+        data_type: "date"
+        nullable: true
+      
+      - name: "FEE_TODT"
+        db_field: "fee_to_date"
+        data_type: "date"
+        nullable: true
+      
+      - name: "RATE"
+        db_field: "rate"
+        data_type: "decimal"
+        decimal_places: 4
+        nullable: true
+      
+      - name: "BROKERAGE"
+        db_field: "brokerage"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+      
+      - name: "BROKCODE"
+        db_field: "broker_code"
+        data_type: "string"
+        max_length: 50
+        nullable: true
+      
+      - name: "SUBBROK"
+        db_field: "sub_broker"
+        data_type: "string"
+        max_length: 50
+        nullable: true
+      
+      - name: "TRADDATE"
+        db_field: "trade_date"
+        data_type: "date"
+        nullable: true
+      
+      - name: "AVG_ASSETS"
+        db_field: "avg_assets"
+        data_type: "decimal"
+        decimal_places: 2
+        nullable: true
+      
+      - name: "TF_FROM_DA"
+        db_field: "trail_fee_from_date"
+        data_type: "date"
+        nullable: true
+      
+      - name: "TF_TO_DATE"
+        db_field: "trail_fee_to_date"
+        data_type: "date"
+        nullable: true
+      
+      - name: "FEE_TYPE"
+        db_field: "fee_type"
+        data_type: "string"
+        max_length: 10
+        nullable: true
+      
+      - name: "DAYS_FEE_P"
+        db_field: "days_in_fee_period"
+        data_type: "integer"
+        nullable: true
+      
+      - name: "FEE_DESC"
+        db_field: "fee_description"
+        data_type: "string"
+        max_length: 500
+        nullable: true
+      
+      - name: "PROCDATE"
+        db_field: "processing_date"
+        data_type: "date"
+        nullable: true
+      
+      - name: "ADJFLAG"
+        db_field: "adjustment_flag"
+        data_type: "string"
+        max_length: 5
+        nullable: true
+      
+      - name: "SWFLAG"
+        db_field: "switch_flag"
+        data_type: "string"
+        max_length: 5
+        nullable: true
+      
+      - name: "SHORT_NAME"
+        db_field: "scheme_short_name"
+        data_type: "string"
+        max_length: 255
+        nullable: true
+      
+      - name: "REF_NO"
+        db_field: "reference_no"
+        data_type: "string"
+        max_length: 50
+        nullable: true
+      
+      - name: "TER_LOCATI"
+        db_field: "ter_location"
+        data_type: "string"
+        max_length: 10
+        nullable: true
+      
+      - name: "SUB_BROKER"
+        db_field: "sub_broker_detail"
+        data_type: "string"
+        max_length: 50
+        nullable: true
+
+# ============================================================================
+# Global Settings
+# ============================================================================
+global_settings:
+  # Add source_file and timestamp metadata to each record
+  add_metadata: true
+  metadata_fields:
+    - source_file  # Filename of Excel file being loaded
+    - loaded_at    # Timestamp when record was inserted
+    - updated_at   # Timestamp when record was last updated
+  
+  # Duplicate detection settings
+  duplicate_detection:
+    enabled: true
+    method: "row_hash"  # hash all columns to detect exact duplicates
+    log_duplicates: true
+    skip_duplicates: true  # Skip if exact duplicate exists in DB
+  
+  # Data validation settings
+  validation:
+    strict_mode: false  # True = fail entire batch on any error; False = log errors but continue
+    log_validation_errors: true
+    max_errors_per_file: 1000

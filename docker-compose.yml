@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: sales_dashboard_db
+    environment:
+      POSTGRES_DB: sales_dashboard
+      POSTGRES_USER: sales_user
+      POSTGRES_PASSWORD: SecurePassword123!
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8"
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+      - ./database/logs:/var/log/postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sales_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - sales_network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  sales_network:
+    driver: bridge
